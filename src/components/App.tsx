@@ -2,10 +2,27 @@ import React from 'react'
 import { Store } from '../store/Store';
 
 export default function App(): JSX.Element {
-    const store = React.useContext(Store);
+    const { state, dispatch } = React.useContext(Store);
+
+    // useEffect hook to load the page when the data are ready
+    React.useEffect(() => {
+        state.episodes.length === 0 && fetchDataAction()
+    });
+
+    // function to fetch Data
+    const fetchDataAction = async () => {
+        const URL = 'https://api.tvmaze.com/singlesearch/shows?q=rick-&-morty&embed=episodes';
+        const data = await fetch(URL);
+        const dataJSON = await data.json();
+        // return the dispatch action
+        return dispatch({
+            type: 'FETCH_DATA',
+            payload: dataJSON._embedded.episodes
+        });
+    }
+    console.log(state);
     return (
         <React.Fragment>
-            { console.log(store) }
             <h1>
                 Rick and Morty
             </h1>

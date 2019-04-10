@@ -14,8 +14,9 @@ const initialState: IState = {
 };
 
 // create Store
-export const Store = React.createContext<IState>(initialState);
+export const Store = React.createContext<IState | any>(initialState);
 
 export function StoreProvider(props: any): JSX.Element {
-    return <Store.Provider value={initialState}>{ props.children }</Store.Provider>
+    const [state, dispatch] = React.useReducer(reducer, initialState);
+    return <Store.Provider value={{state, dispatch}}>{ props.children }</Store.Provider>
 }
