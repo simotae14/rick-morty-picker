@@ -1,17 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import App from './components/App';
+import { StoreProvider } from './store/Store';
 
-export default function App(): JSX.Element {
-  return (
-    <h1>
-      Hello !!
-    </h1>
-  )
-}
+const root = document.getElementById('app-root');
 
-
-const root = document.getElementById('app-root')
-
-
-ReactDOM.render(<App />, root)
+ReactDOM.render(<StoreProvider><App /></StoreProvider>, root);
