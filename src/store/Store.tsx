@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import reducer from '../reducers';
 
 // interface initialState
 interface IState {
@@ -15,10 +15,6 @@ const initialState: IState = {
 
 // create Store
 export const Store = React.createContext<IState>(initialState);
-
-function reducer() {
-    // TBD
-}
 
 export function StoreProvider(props: any): JSX.Element {
     return <Store.Provider value={initialState}>{ props.children }</Store.Provider>
