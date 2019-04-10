@@ -1,11 +1,6 @@
 import React from 'react';
-import reducer from '../reducers';
-
-// interface initialState
-interface IState {
-    episodes: [],
-    favourites: []
-};
+import { reducer } from '../reducers';
+import { IState, IAction } from '../interfaces';
 
 // create initialState
 const initialState: IState = {

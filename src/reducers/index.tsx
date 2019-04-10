@@ -1,20 +1,19 @@
-// interface initialState
-interface IState {
-    episodes: [],
-    favourites: []
-};
+import { IState, IAction } from '../interfaces';
 
-interface IAction {
-    type: string,
-    payload: any
-}
-
-export default function reducer(state: IState, action: IAction): IState {
+export function reducer(state: IState, action: IAction): IState {
     switch (action.type) {
         case 'FETCH_DATA':
             return {
                 ...state,
                 episodes: action.payload
+            }
+        case 'ADD_FAV':
+            return {
+                ...state,
+                favourites: [
+                    ...state.favourites,
+                    action.payload
+                ]
             }
         default:
             return state
