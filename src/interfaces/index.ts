@@ -3,16 +3,17 @@
 | All the interfaces!!!
 |--------------------------------------------------
 */
+export type Dispatch = React.Dispatch<IAction>;
 
 // interface initialState
 export interface IState {
     episodes: Array<IEpisode>,
-    favourites: Array<any>
+    favourites: Array<IEpisode>
 };
 
 export interface IAction {
     type: string,
-    payload: any
+    payload: Array<IEpisode> | any
 };
 
 // interface for episode
@@ -39,7 +40,7 @@ export interface IEpisodesProps {
     favourites: Array<IEpisode>,
     store: {
         state: IState,
-        dispatch: any
+        dispatch: Dispatch
     },
-    toggleFavAction: (state: IState, dispatch: any, episode: IEpisode): IAction
+    toggleFavAction: (state: IState, dispatch: Dispatch, episode: IEpisode): IAction
 }
