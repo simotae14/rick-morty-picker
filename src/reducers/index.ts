@@ -23,5 +23,4 @@ export function reducer(state: IState, action: IAction): IState {
         default:
             return state
     }
-
 }
