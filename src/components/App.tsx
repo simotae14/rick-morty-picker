@@ -2,6 +2,9 @@ import React from 'react'
 import { Store } from '../store/Store';
 import { IAction, IEpisode } from '../interfaces';
 
+// import with Lazy React
+const EpisodesList = React.lazy<any>(() => import('./EpisodesList'));
+
 export default function App(): JSX.Element {
     const { state, dispatch } = React.useContext(Store);
 
@@ -40,7 +43,13 @@ export default function App(): JSX.Element {
         }
         return dispatch(dispatchObject);
     }
-    console.log(state);
+
+    // define the props object to pass
+    const props = {
+        episodes: state.episodes,
+        toggleFavAction,
+        favourites: state.favourites
+    }
     return (
         <React.Fragment>
             <header className="header">
@@ -57,26 +66,9 @@ export default function App(): JSX.Element {
                 </div>
             </header>
             <section className="episode-layout">
-                {
-                    state.episodes.map((episode: IEpisode) => {
-                        return (
-                            <section key={episode.id} className="episode-box">
-                                <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
-                                <div>
-                                    { episode.name }
-                                </div>
-                                <section>
-                                    <div>
-                                        Season: { episode.season } Number: { episode.number }
-                                    </div>
-                                    <button type="button" onClick={() => toggleFavAction(episode) }>
-                                        { state.favourites.find((fav: IEpisode) => fav.id === episode.id ) ? 'Unfav' : 'Fav' }
-                                    </button>
-                                </section>
-                            </section>
-                        );
-                    })
-                }
+                <React.Suspense fallback={<div>loading ...</div>}>
+                    <EpisodesList { ...props } />
+                </React.Suspense>
             </section>
         </React.Fragment>
     );
