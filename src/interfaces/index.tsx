@@ -6,7 +6,7 @@
 
 // interface initialState
 export interface IState {
-    episodes: Array<any>,
+    episodes: Array<IEpisode>,
     favourites: Array<any>
 };
 

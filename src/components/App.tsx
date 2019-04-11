@@ -1,6 +1,6 @@
 import React from 'react'
 import { Store } from '../store/Store';
-import { IState, IAction } from '../interfaces';
+import { IAction, IEpisode } from '../interfaces';
 
 export default function App(): JSX.Element {
     const { state, dispatch } = React.useContext(Store);
@@ -23,19 +23,38 @@ export default function App(): JSX.Element {
     }
 
     // function to add Favourite
-    const toggleFavAction = (episode: IEpisode): IAction => dispatch({
-        type: 'ADD_FAV',
-        payload: episode
-    });
+    const toggleFavAction = (episode: IEpisode): IAction => {
+        // check if the episode it's already in the Favourites
+        const episodeInFav: boolean = state.favourites.includes(episode);
+        let dispatchObject: IAction = {
+            type: 'ADD_FAV',
+            payload: episode
+        };
+        if (episodeInFav) {
+            // create a new favourite array without the episode
+            const favWithoutEpisode = state.favourites.filter((currFav: IEpisode) => currFav.id !== episode.id)
+            dispatchObject = {
+                type: 'REMOVE_FAV',
+                payload: favWithoutEpisode
+            }
+        }
+        return dispatch(dispatchObject);
+    }
+    console.log(state);
     return (
         <React.Fragment>
             <header className="header">
-                <h1>
-                    Rick and Morty
-                </h1>
-                <p>
-                    Pick your favourite episode!!!
-                </p>
+                <div>
+                    <h1>
+                        Rick and Morty
+                    </h1>
+                    <p>
+                        Pick your favourite episode!!!
+                    </p>
+                </div>
+                <div>
+                    Favourite(s): { state.favourites.length }
+                </div>
             </header>
             <section className="episode-layout">
                 {
@@ -50,7 +69,9 @@ export default function App(): JSX.Element {
                                     <div>
                                         Season: { episode.season } Number: { episode.number }
                                     </div>
-                                    <button type="button" onClick={() => toggleFavAction(episode) }>Fav</button>
+                                    <button type="button" onClick={() => toggleFavAction(episode) }>
+                                        { state.favourites.find((fav: IEpisode) => fav.id === episode.id ) ? 'Unfav' : 'Fav' }
+                                    </button>
                                 </section>
                             </section>
                         );

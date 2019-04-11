@@ -15,6 +15,11 @@ export function reducer(state: IState, action: IAction): IState {
                     action.payload
                 ]
             }
+        case 'REMOVE_FAV':
+            return {
+                ...state,
+                favourites: action.payload
+            }
         default:
             return state
     }
