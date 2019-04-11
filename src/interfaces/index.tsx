@@ -32,3 +32,10 @@ export interface IEpisode {
     summary: string
     url: string
 }
+
+// interface for the Episodes props
+export interface IEpisodesProps {
+    episodes: Array<IEpisode>,
+    favourites: Array<IEpisode>,
+    toggleFavAction: (episode: IEpisode): IAction
+}
