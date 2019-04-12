@@ -22,6 +22,8 @@ module.exports = {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js' // name of the output
     },
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: 'source-map',
     module: { rules },
     resolve: { extensions: ['.ts', '.tsx', '.js'] },
     devServer: { // puts all the compiled code into memory
